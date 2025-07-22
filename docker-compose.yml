@@ -1,4 +1,13 @@
 services:
+
+  # The setup box
+  box:
+    container_name: practice
+    image: daviscybersec/training-linux-orientation:latest
+    restart: always
+    networks:
+      - quotient_network
+    
   db:
     container_name: quotient_database
     image: postgres
@@ -62,7 +71,7 @@ services:
       dockerfile: Dockerfile.runner
     deploy:
       mode: replicated
-      replicas: 5 # Adjust based on server resources
+      replicas: 2 # Adjust based on server resources
     restart: always
     privileged: false # disable unless a runner needs priv access (e.g. wireguard)
     env_file:
@@ -79,21 +88,6 @@ services:
       - ./custom-checks:/app/checks
     tmpfs:
       - /tmp:size=32m
-
-  divisor:
-    build:
-      context: divisor/
-      dockerfile: Dockerfile
-    restart: always
-    env_file:
-      - .env
-    network_mode: host # Use host networking for divisor
-    depends_on:
-      redis:
-        condition: service_healthy
-    privileged: true # Needed to manage networks
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro # Needed to read runner names
 
 networks:
   quotient_network:
