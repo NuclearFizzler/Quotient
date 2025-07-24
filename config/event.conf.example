@@ -21,10 +21,6 @@
     CredlistName = "Users"
     CredlistPath = "users.credlist"
     CredlistExplainText = "username,password"
-  [[CredlistSettings.Credlist]]
-    CredlistName = "Admins"
-    CredlistPath = "admins.credlist"
-    CredlistExplainText = "username,password"
 
 [[Admin]]
   Name = "admin"
@@ -34,39 +30,15 @@
   Name = "team01"
   Pw = "password"
 
-[[Team]]
-  Name = "team02"
-  Pw = "password"
-
-[[Team]]
-  Name = "team03"
-  Pw = "password"
-
+# IP/Target works with Docker container names / internal DNS
 [[Box]]
-  Name = "leto"
-  IP = "172.19.12_.22"
+  Name = "linux"
+  IP = "practice"
 
-  [[Box.Tcp]]
-    Display = "cyclopes"
-    Port = 4444
+  [[Box.web]]
+    Display = "web-server"
+    target = "practice"
+    port = 8080
 
-[[Box]]
-  Name = "atlas"
-  IP = "172.19.12_.25"
-
-  [[Box.Custom]]
-    Display = "cassandra"
-    CredLists = ["Users", "Admins"]
-    Command = "/app/checks/example.sh ROUND TARGET TEAMIDENTIFIER USERNAME PASSWORD"
-
-[[Box]]
-  Name = "titan"
-  IP = "172.19.12_.27"
-
-  [[Box.Smtp]]
-    Display = "marpessa"
-    CredLists = ["Users"]
-
-  [[Box.Tcp]]
-    Port = 4444
-    Display = "daphne"
+    [[Box.web.url]]
+      path = "/index.html"
