@@ -30,7 +30,6 @@
   Name = "team01"
   Pw = "password"
 
-# IP/Target works with Docker container names / internal DNS
 [[Box]]
   Name = "linux"
   IP = "practice"
@@ -38,7 +37,20 @@
   [[Box.web]]
     Display = "web-server"
     target = "practice"
-    port = 8080
+    port = 80
 
     [[Box.web.url]]
       path = "/index.html"
+
+  [[Box.ssh]]
+    Display = "ssh-users"
+    target = "practice"
+    CredLists = ["Users"]
+
+  [[Box.ftp]]
+    Display = "ftp-server"
+    target = "practice"
+
+    [[Box.ftp.File]]
+    Name = "example.txt"
+    Hash = "66a90067add55b7dce05dae0df73470cbe1f7e4b5c676be59b3abff31d8a7b7e"
